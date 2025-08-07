@@ -23,9 +23,6 @@ export class User implements IUser {
     @Expose()
     email: string;
 
-    @Exclude()
-    password: string;
-
     @ApiProperty({ enum: ERole })
     @Expose()
     role: ERole;
@@ -36,7 +33,7 @@ export class User implements IUser {
 }
 
 export interface IUser {
-    id: string;
+    id: number;
     username: string;
     name: string;
     phone: string;

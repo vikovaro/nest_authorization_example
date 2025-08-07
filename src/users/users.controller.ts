@@ -1,19 +1,10 @@
-import {
-    Body,
-    Controller,
-    Delete,
-    Get, HttpStatus,
-    Param,
-    ParseIntPipe,
-    Patch,
-    Post, Req, SerializeOptions,
-    UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, HttpStatus, Req, SerializeOptions, UseGuards } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags, ApiResponse } from '@nestjs/swagger';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { User } from './entities/user.entity';
+import type { IUserRequest } from '../auth/requests/user.request';
 
 @ApiTags('users')
 @Controller('users')
@@ -29,8 +20,8 @@ export class UsersController {
         excludeExtraneousValues: true,
         enableImplicitConversion: true,
     })
-    async getMe(@Req() req: Request) {
-        return await this.usersService.getUserById(req['data'].userId);
+    async getMe(@Req() req: IUserRequest) {
+        return await this.usersService.getUserById(req.user.id);
     }
 
     // @ApiOperation({ summary: 'Получить всех пользователей' })
