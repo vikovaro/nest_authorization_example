@@ -1,6 +1,14 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import {
+    IsEmail,
+    IsNotEmpty,
+    IsPhoneNumber,
+    IsString,
+    Matches,
+    MaxLength,
+    MinLength,
+} from 'class-validator';
 
 export class SignUpDto implements ISignUpRequest {
     @ApiProperty({ example: 'username' })

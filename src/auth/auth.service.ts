@@ -1,40 +1,39 @@
 import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
 import * as bcrypt from 'bcrypt';
 import { SignUpDto } from './dto/sign-up.dto';
 import { TokenDto } from './dto/token.dto';
 import { IUser } from '../users/entities/user.entity';
+import { UsersRepository } from '../users/users.repository';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private usersService: UsersService,
+        private usersRepository: UsersRepository,
         private jwtService: JwtService,
     ) {}
 
     async signUp(signUpDto: SignUpDto): Promise<TokenDto> {
-        const existingUserByEmail = await this.usersService.findByEmail(signUpDto.email);
+        const existingUserByEmail = await this.usersRepository.getByEmail(signUpDto.email);
         if (existingUserByEmail) {
             throw new ConflictException('Пользователь с таким email уже существует');
         }
 
-        const user = await this.usersService.createUser({
-            email: signUpDto.email,
-            name: signUpDto.name,
-            password: signUpDto.password,
-        });
+        const user = await this.usersRepository.createUser(signUpDto);
 
         return this.generateToken(user);
     }
 
     async signIn(username: string, password: string): Promise<TokenDto> {
-        const user = await this.usersService.findByUsername(username);
+        const user = await this.usersRepository.getByUsername(username);
         if (!user) {
             throw new UnauthorizedException('Неверные учетные данные');
         }
 
-        const isPasswordValid = await this.validatePassword(password, user.password);
+        const userPassword = await this.usersRepository.getPassword(user.id);
+
+        const isPasswordValid = await this.validatePassword(password, userPassword);
+
         if (!isPasswordValid) {
             throw new UnauthorizedException('Неверные учетные данные');
         }
@@ -42,7 +41,10 @@ export class AuthService {
         return this.generateToken(user);
     }
 
-    private async validatePassword(plainPassword: string, hashedPassword: string): Promise<boolean> {
+    private async validatePassword(
+        plainPassword: string,
+        hashedPassword: string,
+    ): Promise<boolean> {
         return bcrypt.compare(plainPassword, hashedPassword);
     }
 
@@ -50,7 +52,7 @@ export class AuthService {
         const payload = {
             sub: user.id,
             email: user.email,
-            role: user.role
+            role: user.role,
         };
 
         return {
