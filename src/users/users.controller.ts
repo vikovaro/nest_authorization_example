@@ -53,7 +53,7 @@ export class UsersController {
         enableImplicitConversion: true,
     })
     async getUserById(@Param('id', ParseIntPipe) id: number) {
-        return await this.usersService.getUserById(id);
+        return await this.usersService.getUserById(+id);
     }
 
     @ApiOperation({ summary: 'Обновить пользователя' })

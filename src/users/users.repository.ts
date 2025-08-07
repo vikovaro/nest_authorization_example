@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient, Role } from '@prisma/client';
+import { Role } from '@prisma/client';
 import { IUser } from './entities/user.entity';
 import { SignUpDto } from '../auth/dto/sign-up.dto';
+import { PrismaService } from '../prisma/prisma.service';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsersRepository {
-    constructor(private readonly prisma: PrismaClient) {}
+    constructor(private readonly prisma: PrismaService) {}
 
     BASE_USER_SELECT = {
         id: true,
@@ -47,13 +49,15 @@ export class UsersRepository {
     }
 
     async createUser(signUpDto: SignUpDto): Promise<IUser> {
+        const hashedPassword = await bcrypt.hash(signUpDto.password, 10);
+
         return this.prisma.user.create({
             data: {
                 username: signUpDto.username,
                 name: signUpDto.name,
                 email: signUpDto.email,
                 phone: signUpDto.phone,
-                password: signUpDto.password,
+                password: hashedPassword,
                 role: Role.User,
             },
             select: this.BASE_USER_SELECT,
