@@ -9,7 +9,7 @@ import {
     Patch,
     Req,
     SerializeOptions,
-    UseGuards
+    UseGuards,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { ApiTags, ApiResponse, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';

@@ -27,10 +27,13 @@ export class UsersService {
             hashedPassword = await bcrypt.hash(updateUserDto.password, salt);
         }
 
-        return this.usersRepository.updateUser({
-            ...updateUserDto,
-            password: hashedPassword,
-        }, userId);
+        return this.usersRepository.updateUser(
+            {
+                ...updateUserDto,
+                password: hashedPassword,
+            },
+            userId,
+        );
     }
 
     async deleteUser(userId: number): Promise<void> {

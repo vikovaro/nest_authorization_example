@@ -60,7 +60,10 @@ export class UsersRepository {
         });
     }
 
-    async updateUser(updateData: Partial<IUser & { password?: string }>, userId: number): Promise<IUser> {
+    async updateUser(
+        updateData: Partial<IUser & { password?: string }>,
+        userId: number,
+    ): Promise<IUser> {
         return this.prisma.user.update({
             where: { id: userId },
             data: {

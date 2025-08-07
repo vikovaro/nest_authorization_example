@@ -33,7 +33,7 @@ export class UpdateUserDto {
     @ApiProperty({
         example: 'example@email.com',
         description: 'Email of user',
-        required: false
+        required: false,
     })
     @IsEmail()
     @MaxLength(255)
@@ -43,7 +43,7 @@ export class UpdateUserDto {
     @ApiProperty({
         example: 'Pass#123',
         description: 'Password of user',
-        required: false
+        required: false,
     })
     @MinLength(8, {
         message: 'password too short',
