@@ -11,6 +11,7 @@
         "@nestjs/passport": "^11.0.5",
         "@nestjs/platform-express": "^11.0.1",
         "@nestjs/swagger": "^11.2.0",
+        "@prisma/client": "^6.13.0",
         "bcrypt": "^6.0.0",
         "class-transformer": "^0.5.1",
         "class-validator": "^0.14.2",
@@ -35,7 +36,7 @@
         "eslint-plugin-prettier": "^5.2.2",
         "globals": "^16.0.0",
         "jest": "^30.0.0",
-        "prettier": "^3.4.2",
+        "prettier": "^3.6.2",
         "source-map-support": "^0.5.21",
         "supertest": "^7.0.0",
         "ts-jest": "^29.2.5",
@@ -289,6 +290,8 @@
     "@pkgjs/parseargs": ["@pkgjs/parseargs@0.11.0", "", {}, "sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg=="],
 
     "@pkgr/core": ["@pkgr/core@0.2.9", "", {}, "sha512-QNqXyfVS2wm9hweSYD2O7F0G06uurj9kZ96TRQE5Y9hU7+tgdZwIkbAKc5Ocy1HxEY2kuDQa6cQ1WRs/O5LFKA=="],
+
+    "@prisma/client": ["@prisma/client@6.13.0", "", { "peerDependencies": { "prisma": "*", "typescript": ">=5.1.0" }, "optionalPeers": ["prisma", "typescript"] }, "sha512-8m2+I3dQovkV8CkDMluiwEV1TxV9EXdT6xaCz39O6jYw7mkf5gwfmi+cL4LJsEPwz5tG7sreBwkRpEMJedGYUQ=="],
 
     "@prisma/config": ["@prisma/config@6.13.0", "", { "dependencies": { "c12": "3.1.0", "deepmerge-ts": "7.1.5", "effect": "3.16.12", "read-package-up": "11.0.0" } }, "sha512-OYMM+pcrvj/NqNWCGESSxVG3O7kX6oWuGyvufTUNnDw740KIQvNyA4v0eILgkpuwsKIDU36beZCkUtIt0naTog=="],
 
