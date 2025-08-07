@@ -60,17 +60,23 @@ export class UsersRepository {
         });
     }
 
-    // async updateUser(updateData: UpdateUserRequest, userId: string): Promise<IUserResponse> {
-    //     return this.prisma.user.update({
-    //         where: { id: userId },
-    //         data: {
-    //             username: updateData.username ? updateData.username : undefined,
-    //             name: updateData.name ? updateData.name : undefined,
-    //             phone: updateData.phone ? updateData.phone : undefined,
-    //             email: updateData.email ? updateData.email : undefined,
-    //             password: updateData.password ? updateData.password : undefined,
-    //         },
-    //         select: this.BASE_USER_SELECT,
-    //     });
-    // }
+    async updateUser(updateData: Partial<IUser & { password?: string }>, userId: number): Promise<IUser> {
+        return this.prisma.user.update({
+            where: { id: userId },
+            data: {
+                username: updateData.username,
+                name: updateData.name,
+                phone: updateData.phone,
+                email: updateData.email,
+                password: updateData.password,
+            },
+            select: this.BASE_USER_SELECT,
+        });
+    }
+
+    async deleteUser(userId: number): Promise<void> {
+        await this.prisma.user.delete({
+            where: { id: userId },
+        });
+    }
 }
